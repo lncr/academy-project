@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from posts.models import Post
 from posts.forms import PostForm, SearchForm
 from comments.forms import CommentForm
+from posts.utils import ObjectCreateMixin
 
 
 def posts_list_view(request):
@@ -41,18 +42,10 @@ def post_detail_view(request, id):
                    'comment_form': comment_form})
 
 
-class PostCreateView(View):
+class PostCreateView(View, ObjectCreateMixin):
 
-    def get(self, request):
-        form = PostForm()
-        return render(request, 'posts/post_create.html', context={'form': form})
-
-    def post(self, request):
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save()
-            return redirect(post)
-        return render(request, 'posts/post_create.html', context={'form': form})
+    form = PostForm
+    template = 'posts/post_create.html'
 
 
 class PostUpdateView(View):
