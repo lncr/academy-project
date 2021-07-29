@@ -15,7 +15,3 @@ class Post(models.Model):
 
     def get_delete_url(self):
         return reverse('post_delete_url', kwargs={'id': self.id})
-get_user_model
-User = get_user_model()
-
-User.objects.create_user(...)
