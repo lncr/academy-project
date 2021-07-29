@@ -16,7 +16,7 @@ def posts_list_view(request):
             search_param = search_form.cleaned_data['search_param']
             filtered_posts = Post.objects.filter(title__icontains=search_param)
             return render(request, 'posts/index.html', context={'posts': filtered_posts})
-            
+
 
 def post_detail_view(request, id):
     post = get_object_or_404(Post, id=id)
