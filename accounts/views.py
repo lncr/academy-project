@@ -51,7 +51,7 @@ class RegisterView(View):
         if bound_form.is_valid():
             username = bound_form.cleaned_data.get('username')
             password = bound_form.cleaned_data.get('password')
-            user = User.objects.crete_user(username=username, password=password)
+            user = User.objects.create_user(username=username, password=password)
             login(request, user)
             return redirect(reverse('posts_list_url'))
 
@@ -60,4 +60,4 @@ class RegisterView(View):
 
 def logout_view(request):
     logout(request)
-    return redirect(reverse('posts_list_url'))
+    return redirect(reverse('login_url'))
