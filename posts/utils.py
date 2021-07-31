@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 class ObjectCreateMixin:
     form = None
     template = None
+    has_author = False
 
     def get(self, request):
         form = self.form()
@@ -11,7 +12,10 @@ class ObjectCreateMixin:
     def post(self, request):
         form = self.form(request.POST)
         if form.is_valid():
-            obj = form.save()
+            obj = form.save(commit=False)
+            if self.has_author:
+                obj.author = request.user
+            obj.save()
             return redirect(obj)
         return render(request, self.template, context={'form': form})
 
